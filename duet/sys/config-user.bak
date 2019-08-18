@@ -1,0 +1,77 @@
+; Provides a custom configuration area for the railcore user.
+;Use-case : By keeping any custom definitions in this file (such as Z probe attributes, axis minima/maxima and anything else that you wish to override in config.g
+;         : it will enable the user to easily keep track of their own changes to the default config, as well as provide a simple upgrade path for future Github releases.
+;         *** Uncomment any lines pertinent to your configuration and            ***
+;         *** feel free to delete anything in here that you are not using.       ***
+;         **************************************************************************
+; Z probe and compensation definition
+; *** WARNING - **Always** make sure your cables are correct, secure and test them thoroughly before homing Z for the first times!
+; INSTRUCTIONS :    1) Uncomment your configuration lines
+;		    2) M558 *** Do not add the Fxxx parameter for M558 here, it is set in homez.g
+;	     	    3) G31 
+;		      a) Customize your offsets appropriately, where the probe is X Y is offset from the nozzle.
+;		      b) Z is the trigger height (how high your nozzle is from the bed when the probe triggers). You need to dial those in.
+;                     c) Tip: A larger trigger height in G31 moves you CLOSER to the bed
+
+M552 S1                  ; Enable WiFi
+
+M558 P1                  ; IR probe Probing configuration          
+G31 X0 Y35 Z0.504 P500    ; IR probe Probing configuration
+M558 H7.5 A1 T18000 S0.01
+
+M572 D0 S0.05 ; pressure advance
+
+; Axis and motor configuration - Faster speeds, so uncomment only when fully commissioned!
+M906 X1200 Y1200 Z800 E800 I60          ; Set stock motor currents (mA)
+M201 X3000 Y3000 Z20 E1000              ; Accelerations (mm/s^2)
+M203 X18000 Y18000 Z800 E3600           ; Maximum speeds (mm/min)
+M566 X1000 Y1000 Z30 E1300              ; Maximum jerk speeds mm/minute
+
+; Stall guard config / sensorless
+M574 X1 Y1 S3                           ; Set endstop configuration - motor load configuration
+M915 P0:1 S3 R0 F0                      ; both motors because corexy; Sensitivity 4, don’t take action, don’t filter
+
+; Leadscrew motor configuration
+M92 Z800                                ; Steps/mm for Z - TR8*4 / 1.8 deg stepper or TR8*8 / 0.9 deg stepper
+
+; Extruder
+M92 E415                                ; Extruder - 1.8 deg/step Steps/mm (Standard BMG pancake stepper 17HS10-0704S)
+
+; Set axis minima:maxima switch positions (Adjust to suit your machine and to make X=0 and Y=0 the edges of the bed)
+M208 X-10:300 Y-8:300 Z0:610            ; 300ZLT
+
+; Thermistors
+; M570: Configure heater fault detection
+M570 H1 P5 T25                      ; Hnnn Heater number
+			            ; Pnnn Time in seconds for which a temperature anomaly must persist on this heater before raising a heater fault.
+				    ; Tnnn Permitted temperature excursion from the setpoint for this heater (default 15C)
+M143 H0 S130                        ; Maximum bed temperature
+M143 H1 S295                        ; Maximum nozzle temperature
+M305 P0 S"Bed" T100000 B3950 R4700 H0 L0 X6 ; Use BOM Thermistor values for bed and remp to x6
+M305 P107 S"Bed heater" T100000 B3950 R4700 X7
+
+
+; Fans
+M106 P0 S0 I0 F500 H-1               ; Set fan 0 value, PWM signal inversion and frequency. Thermostatic control is turned off
+M106 P1 S1 I0 F500 H1 T45 C"Tool"    ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on
+M106 P2 S0 I0 F500 H-1 C"Part"              ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned off
+
+
+
+; Tool definition - E3D Gold
+M563 P0 S"E3Dv6 Gold" D0 H1 F2       ; Define tool 0 uses extruder 0, heater 1 ,Fan 2
+G10 P0 X0 Y0 Z0                      ; Set tool 0 axis offsets
+M143 H1 S290                         ; Maximum H1 (Extruder) heater temperature (E3D requires 285C to change nozzle)
+
+; Default mesh levelling
+M557 X30:280 Y30:280 S250 S250       ; Set Default Mesh
+
+;Axis compensation
+M556 S80 X0.8 Y0.3 Z0.72             ; Measured
+
+; Communications
+; FTP
+M586 P1 S1                             ; Disable FTP (default) S1 to enable
+;M551 P"myrap"                          ; Machine password (used for FTP)
+; Telnet
+;M586 P2 S0                             ; Disable Telnet (default) S1 to enable
