@@ -2,8 +2,7 @@
 ; run when a print is cancelled with an M1 command during a print job.
 ;
 
-G91 G1 E-1.0 F1000.0 ;  retract
-M98 P"/sys/move/z_up.g"
+G91 G1 E-6.0 F3600.0 ;  retract
 M98 P"/sys/move/park.g"
 M400                    ; wait for moves to complete
 

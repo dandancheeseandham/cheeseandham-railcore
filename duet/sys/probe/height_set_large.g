@@ -1,4 +1,5 @@
 ; **** Set H and Z to a dive height that you are need for major adjustments. ****
+M561                     ; Clear bed transforms- stop mesh compensation being used during this operation
 M671 S30                 ; Custom M671 setting for leadscrew adjustment - S is the max correction in mm
 M558 H30                ; Set to twice your typical probe height for safety, but you can set this down to 1mm for super-fast probing.
                          ; the firmware moves the Z probe to this height above where it expects the bed to be before commencing probing. The maximum depth of probing 
