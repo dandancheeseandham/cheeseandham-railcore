@@ -1,5 +1,0 @@
-; 4 Point Probe                    ; define 4 points in a clockwise direction around the bed, starting near (0,0)
-G30 P0 X57.8 Y57.8 Z-99999         ;
-G30 P1 X57.8 Y252.2 Z-99999        ;
-G30 P2 X252.2 Y252.2 Z-99999       ; 
-G30 P3 X252.2 Y57.8 Z-99999 S3     ; 

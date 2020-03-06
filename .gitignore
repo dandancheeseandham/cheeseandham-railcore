@@ -1,7 +1,0 @@
-
-.rfmbackup
-*.bin
-duet/sys/eventlog.txt
-duet/sys/heightmap.csv
-dwc2settings.json
-duet/macros/silly.g

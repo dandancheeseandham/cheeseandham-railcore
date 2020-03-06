@@ -1,1 +1,0 @@
-M98 P"/sys/move/z_probe_point.g"
