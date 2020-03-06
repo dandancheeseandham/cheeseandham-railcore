@@ -1,0 +1,1 @@
+M98 P"/sys/speed/slow_quiet.g"
