@@ -1,0 +1,1 @@
+M106 S0.25 ; set cooling fan to 25%

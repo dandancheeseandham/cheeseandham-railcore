@@ -1,0 +1,2 @@
+M671 S7.5                ; Back to standard M671 config.g setting for leadscrew adjustment - S is the max correction in mm
+M558 H7.5                 ; Match your stand M558 config.g setting or above (normally 10mm) 
