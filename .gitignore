@@ -1,0 +1,14 @@
+
+RRF3/sys/Duet2CombinedFirmware.bin
+RRF3/sys/Duet2CombinedIAP.bin
+RRF3/sys/Duet3_SDiap_MB6HC.bin
+RRF3/sys/Duet3Firmware_EXP3HC.bin
+RRF3/sys/Duet3Firmware_MB6HC.bin
+RRF3/sys/DuetMaestroFirmware.bin
+RRF3/sys/DuetMaestroIAP.bin
+RRF3/sys/DuetWiFiServer.bin
+RRF3/sys/dwc2settings.json
+RRF3/sys/eventlog.txt
+RRF3/sys/heightmap.csv
+.rfmbackup
+RRF3/sys/config-override.g
