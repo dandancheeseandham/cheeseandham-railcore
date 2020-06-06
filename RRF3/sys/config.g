@@ -3,9 +3,6 @@
 ; #######################################################################
 ; cheeseandham 2020/05/27
 
-M98 P"/sys/config-railcore.g"
-
-
 ; #### Debugging
 M111 S0                     ; Debug off
 M929 P"eventlog.txt" S1     ; Start logging to file eventlog.txt
