@@ -1,14 +1,17 @@
 ; #######################################################################
 ; ###### RRF3 Configuration file for RailcoreII ZL Series Printers ######
 ; #######################################################################
-; cheeseandham 2020/02/12
+; cheeseandham 2020/05/27
+
+M98 P"/sys/config-railcore.g"
+
 
 ; #### Debugging
 M111 S0                     ; Debug off
 M929 P"eventlog.txt" S1     ; Start logging to file eventlog.txt
 M550 P"RailCore"            ; Machine name and Netbios name (can be anything you like)
 
-M540 PDE:AD:BE:EF:CA:FE     ; Set MAC address (unused on DuetWifi)
+;M540 P2c:3a:e8:0b:09:f7     ; Set MAC address (unused on DuetWifi)
 M552 S1                     ; Enable networking
 M552 P0.0.0.0               ; Use DHCP
 
@@ -56,9 +59,8 @@ M915 P0:1 S3 R0 F0                        ; Both motors because corexy; Sensitiv
 
 ; #### Current, speeds and Z/E step settings
 ; Fully commissioned speeds.
-M906 X1300 Y1300 Z1200 E560 I20   ; Set motor currents (mA) and idle at 10%
+M906 X1300 Y1300 Z1000 E560 I20   ; Set motor currents (mA) and idle at 10%
 M201 X4000 Y4000 Z100 E1500       ; Accelerations (mm/s^2)
-M204 P1400 T4000                  ; General maximum acceleration P(print) T(travel)
 M203 X24000 Y24000 Z800 E3600     ; Maximum speeds (mm/min)
 M566 X1000 Y1000 Z100 E1500       ; Maximum jerk speeds mm/minute
 M92 Z800                          ; Leadscrew motor axis steps/mm for Z - TR8*4 / 1.8 deg stepper or TR8*8 / 0.9 deg stepper
@@ -76,21 +78,21 @@ M92 E415                          ; Extruder steps/mm - 1.8 deg/step Steps/mm (S
 ; ####  Set axis minima:maxima switch positions
 ; Adjust to suit your machine and to make X=0 and Y=0 the edges of the bed
 ;M208 X0:250 Y0:250 Z-0.2:230     ; Conservative 300ZL/T settings (or 250ZL) ; These values are conservative to start with, adjust during commissioning.
-M208 X-2:300 Y-8:300 Z0:610        ; 300ZLT
+M208 X-2:300 Y0:300 Z0:610        ; 300ZLT
 
-
-; #### Heaters
-;M570 S360                       ; Print will be terminated if a heater fault is not reset within 360 minutes.
-M143 H0 S80                      ; Maximum H0 (Bed) heater temperature (Conservative)
-M143 H1 S230                     ; Maximum H1 (Extruder) heater temperature (Conservative and in case extruder has PTFE lining)
-M140 S-273.1 R-273.1             ; Standby and initial Temp for bed as "off" (-273.1 = "off")
-
+; Pin Names https://duet3d.dozuki.com/Wiki/RepRapFirmware_3_overview#Section_Pin_names_for_Duet_2_WiFi_Ethernet
 
 ; #### Fans
-M950 F0 C"nil" Q500              ;_RRF3_ define fan0 (free pin as dead fan)
-M950 F1 C"fan1" Q500             ;_RRF3_ define fan1
-M950 F2 C"fan2" Q500             ;_RRF3_ define fan2
-M950 F6 C"duex.fan6"             ;_RRF3_ define fan6
+M950 F0 C"duex.fan6" Q500        ;_RRF3_ define fan0 
+M950 F1 C"fan2" Q500             ;_RRF3_ define fan1
+M950 F2 C"nil" Q500             ;_RRF3_ define fan2
+
+; #### Lights
+M950 F3 C"!exp.heater3"    ; White LEDs
+M950 F4 C"!exp.heater4"    ; Red LEDs
+M950 F5 C"!exp.heater5"    ; Green LEDs
+M950 F6 C"!exp.heater6"    ; Blue LEDs
+
 M950 F7 C"duex.fan7"             ;_RRF3_ define fan7
 M950 F8 C"duex.fan8"             ;_RRF3_ define fan8
 
@@ -101,6 +103,11 @@ M106 P0 S0                       ; Turn off fan0
 M106 P1 S0                       ; Turn off fan1
 M106 P2 S0                       ; Turn off fan2
 
+M106 P3 S0 C"White"  
+M106 P4 S0 C"Red"  
+M106 P5 S0 C"Green"  
+M106 P6 S0 C"Blue"  
+
 
 ; #### Tool definitions
 ; #### Tool E0 / Heater 1 - E3D Gold
@@ -108,15 +115,15 @@ M950 H1 C"e0heat" T1                        ;_RRF3_ define Hotend heater is on e
 M308 S1 P"e0temp" Y"thermistor" A"e0_heat" T100000 B4725 R4700 C7.06e-8 H0 L0 ;_RRF3_ E0 thermistor,
 M563 P0 D0 H1                               ; Define tool 0
 G10 P0 S0 R0                                ; Set tool 0 operating and standby temperatures
-M563 P0 S"E3Dv6 Gold" D0 H1 F2              ; Define tool 0 uses extruder 0, heater 1 ,Fan 2
+M563 P0 S"E3Dv6 Gold" D0 H1 F1              ; Define tool 0 uses extruder 0, heater 1 ,Fan 1
 G10 P0 X0 Y0 Z0                             ; Set tool 0 axis offsets
 M143 H1 S295                                ; Maximum Extruder 0 temperature (E3D requires 285C to change nozzle)
 M570 H1 P5 T25                              ; Configure heater fault detection
                                             ; Hnnn Heater number
                                             ; Pnnn Time in seconds for which a temperature anomaly must persist on this heater before raising a heater fault.
                                             ; Tnnn Permitted temperature excursion from the setpoint for this heater (default 15C);
-M106 P6 S1 H1 T45 C"Hotend"                 ; Set fan 1. Thermostatic control is ON for Heater 1 (Hotend fan)
-M106 P2 S0 H-1 C"Part"                      ; (Part cooling fan) Set fan 2 value, Thermostatic control is OFF
+M106 P0 S1 H1 T45 C"Hotend"                 ; Set fan 1. Thermostatic control is ON for Heater 1 (Hotend fan)
+M106 P1 S0 H-1 C"Part"                      ; (Part cooling fan) Set fan 2 value, Thermostatic control is OFF
 
 ; #### Filament options
 ;M200 D1.75                                  ; Set filament diameter for future volumetric extrusion.
@@ -136,12 +143,13 @@ M558 H10 A1 T3000 S0.02                     ; Z probe - raise probe height.
 ; #### Probing configuration
 ;M558 P1                                    ; IR probe
 G31 X0 Y35 P500                             ; Probe offset and "stop" value.
-G31 Z1.05                                   ; Probe Z height. 
+;G31 Z0.77                                   ; Probe Z height. buildtak
+G31 Z0.67                                   ; Probe Z height. new surface
 ;M558 A1 S0.01                              ; Probing : (A) number of probes  (S) accuracy over multiple probes.
                                             ; (T) travel speed and (H) height are set in sys/macros
 ; ##### Mesh
 ;M557 X50:200 Y50:200 S150 S150             ; Set Default Mesh (conservative)
-M557 X30:280 Y30:280 P2                     ; Set Mesh for probe
+M557 X35:280 Y35:280 P2                     ; Set Mesh for probe
 
 ; #### Filament runout
 ; M591 D0 P1 C3 S1                          ; Enable Sunhokey filament sensor runout (disabled)
@@ -152,15 +160,21 @@ M557 X30:280 Y30:280 P2                     ; Set Mesh for probe
 ; S - 1 = enable filament monitoring when printing from SD card.
 
 ; #### Bed - Heater 0
-M950 H0 C"bedheat" T0                                                           ;_RRF3_ define Bed heater is on bedheat
+M950 H0 C"bedheat" T0                                                           ;_RRF3_ define Bed heater is on bedheat **
 M308 S0 P"exp.thermistor6" Y"thermistor" A"bed_heat" T100000 B3950 R4700 H0 L0  ;_RRF3_ Bed thermistor, connected to bedtemp on Duet2
 M143 H0 S120                                                                    ; Maximum bed temperature, if using a magbed this is important!
 M308 S8 P"exp.thermistor7" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Silicone heater thermistor on x7
 
+M570 S360                       ; Print will be terminated if a heater fault is not reset within 360 minutes.
+M140 H0                         ;  (H0 as per 3.0 RC11 ** before M143 )
+M140 S-273.1 R-273.1            ; Standby and initial Temp for bed as "off" (-273.1 = "off")
+
+
 ; #### Chamber - Heater 3 - (not enabled yet)
 ;M141 H3                        
 ;M950 H3 C"exp.heater3" T3                                                           ; heater 3 is the chamber heater 
-;M308 S3 P"exp.thermistor3" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Set Sensor 3 as 100K thermistor with B=3950 and a 4.7K series resistor
+M308 S3 P"exp.thermistor3" Y"thermistor" A"chamber high" T100000 B3950 R4700  H0 L0  ; Set Sensor 3 as 100K thermistor with B=3950 and a 4.7K series resistor
+M308 S4 P"exp.thermistor4" Y"thermistor" A"chamber low" T100000 B3950 R4700  H0 L0  ; Set Sensor 4 as 100K thermistor with B=3950 and a 4.7K series resistor
 ;M301 H3 B1                                                                      ; use bang-bang control for the chamber heater
 ;M106 P3 S1 H1 T50:80 C"Chamber"
 
@@ -172,6 +186,8 @@ M106 P8 T35:55 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperatu
                                           ; flags, then when the fan turns on it will delay the reporting of an over-temperature warning for the corresponding drivers
                                           ; for a few seconds, to give the fan time to cool the driver down.)
 
+
+
 ; #### Compensation
 ;M556 S80 X0.8 Y0.3 Z0.72                 ; Axis compensation (measured with Orthangonal Axis Compensation piece)
 M579 X1.0027 Y1.0027 Z1.0011              ; Scale Cartesian axes
@@ -182,9 +198,9 @@ M572 D0 S0.05                             ; Pressure advance compensation
 M307 H0 A186.9 C972.5 D5.3 S1.00 V24.2 B0   ; 300W Bed Heater settings.
 M307 H1 A508.1 C249.0 D3.8 S1.00 V24.2 B0   ; E3D Gold hotend settings.
 
-
 ; #### Finish startup
-G91 G1 Z0.001 F99999 S2                   ; engage motors to prevent bed from moving after power on.
+G91 
+G1 Z0.001 F99999 S2                   ; engage motors to prevent bed from moving after power on.
+G90
 
-;M98 P"/sys/config-user.g"                 ; Load custom user config (designed to be able to be empty, so feel free to comment out)
 M501                                      ; Load saved parameters from non-volatile memory
