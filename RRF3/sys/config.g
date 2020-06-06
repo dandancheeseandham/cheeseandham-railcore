@@ -1,7 +1,7 @@
 ; #######################################################################
 ; ###### RRF3 Configuration file for RailcoreII ZL Series Printers ######
 ; #######################################################################
-; cheeseandham 2020/05/27
+; cheeseandham 2020/06/06
 
 ; #### Debugging
 M111 S0                     ; Debug off
