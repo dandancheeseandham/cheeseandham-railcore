@@ -1,0 +1,155 @@
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+;red
+M106 P4 S1
+M291 P"Red" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+M106 P5 S1
+M291 P"Green" R"Lights" S2
+
+;clear
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+M106 P6 S1
+M291 P"Blue" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+M106 P4 S1
+M106 P5 S1
+M291 P"Yellow" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+M106 P5 S1
+M106 P6 S1
+M291 P"Cyan" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+M106 P4 S1
+M106 P6 S1
+M291 P"Magenta" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+M106 P3 S1
+M291 P"White" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+
+
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+;red
+M106 P4 S0.5
+M291 P"Red" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+M106 P5 S0.5
+M291 P"Green" R"Lights" S2
+
+;clear
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+M106 P6 S0.5
+M291 P"Blue" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+M106 P4 S0.5
+M106 P5 S0.5
+M291 P"Yellow" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+M106 P5 S0.5
+M106 P6 S0.5
+M291 P"Cyan" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
+M106 P4 S0.5
+M106 P6 S0.5
+M291 P"Magenta" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+M106 P3 S0.5
+M291 P"White" R"Lights" S2
+
+;clear
+M106 P3 S0
+M106 P4 S0
+M106 P5 S0
+M106 P6 S0
+
+
