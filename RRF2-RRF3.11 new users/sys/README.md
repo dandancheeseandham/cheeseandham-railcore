@@ -40,10 +40,6 @@ Macros for tuning
 
 ## Disable
 
-
-
-
-
 ## move: MOVE BED TO CERTAIN LOCATIONS
  * back_left.g - (future) RRF3 will base this on your axis limits
  * backoff_x.g - backoff X a set amount
@@ -60,22 +56,4 @@ Macros for tuning
 ## probe: VARIOUS PROBE ACTIONS & FUNCTIONS
  * bed-3point.g - probe 3 points bed level
  * bed-4point.g - probe 4 points bed level
- * height_set_large.g - set all probing heights to large (30mm), good for major bed levelling requirements
- * height_set_small.g - set all probing heights to small, good for faster probing
- * height_set_standard.g - set all probing heights to standard 7.5mm, safe area.
- * homexyz.g - just the homeall move without moving the bedup and down
- * README.md
- * truelevel_no_conditions.g - optimised truelevel RRF2
- * truelevel_fast_rrf3.g- optimised truelevel RRF3 , checks if homed and levelled and skips if it is
- * truelevel_simple_rrf2.g - optimised "dumb" truelevel RRF2 - homes and does 3 bed passes
- * truelevel_simple_rrf3.g - optimised truelevel RRF3 - homes and does 3 bed passes
- * x.g - probe X axis
- * y.g - probe y axis
- * z_accurate.g - probe Z slowly
- * z_rough.g - probe bed fast
 
-## speed:
- * xy_fast.g - set all XY travel speeds to fast
- * xy_slow.g - set all XY travel speeds to slow
- * z_fast.g - set all Z travel speeds to fast
- * z_slow.g - set all Z travel speeds to slow
