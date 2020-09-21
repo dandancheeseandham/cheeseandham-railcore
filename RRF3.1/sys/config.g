@@ -241,8 +241,3 @@ M106 P3 S0                        ; Switch off white light
 M106 P6 S1                        ; Switch on blue light.
 M106 P6 S0.20                        ; Switch off blue light. Blue light for dev
 M106 P5 S1                        ; Switch on green light.
-
-
-G91                               ; Send relative coordinates.
-G1 Z0.001 F99999 H2               ; Engage motors to prevent bed from moving after power on.
-G90                               ; Send absolute coordinates.
