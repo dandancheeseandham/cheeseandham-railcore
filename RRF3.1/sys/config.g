@@ -10,7 +10,7 @@
 ; #### Debugging
 M111 S0                     ; Debug off
 M929 P"eventlog.txt" S1     ; Start logging to file eventlog.txt
-M550 P"RailCore"            ; Machine name and Netbios name (can be anything you like)
+M550 P"ZLT"                 ; Machine name and Netbios name (can be anything you like)
 
 ;M540 P2c:3a:e8:0b:09:f7    ; Set MAC address (unused on DuetWifi)
 M552 S1                     ; Enable networking
@@ -48,8 +48,9 @@ M569 P6 S0                  ; Drive 6 goes backwards                            
 M569 P7 S0                  ; Drive 7 goes backwards                            | Right Z
 
 ; #### Leadscrew locations
-;Front left,(-10,22.5) Rear Left (-10.,227.5) , Right (333,160) S10 is the max correction - measure your own offsets, to the bolt for the yoke of each leadscrew
-M671 X-10:-10:333  Y22.5:277.5:150 S7.5  
+;Front left,(-10,22.5) Rear Left (-10.,227.5) , Right (333,160) S10 is the max correction - measure your own offsets, to the bolt for the yoke of each leadscrew.(The plane tilts at the point of the bolt, so we measure to the actuation/fulcrum on the bed)
+;additions M671 X0:0:348  Y0:255:127.5 S7.5  
+M671 X-10.0:-10.0:338.0 Y22.5:277.5:150.0 S7.5  
 
 ; #### Endstop Configuration - sensorless
 ;M574 X1 S3                                ; _RRF3_ set X endstop to xstop port sensorless
@@ -57,7 +58,7 @@ M671 X-10:-10:333  Y22.5:277.5:150 S7.5
 ;M915 P0:1 S3 R0 F0                        ; Both motors because corexy; Sensitivity 3, don’t take action, don’t filter
 
 ; #### Endstop Configuration - microswitches
-M574 X2 S1 P"xstop"                      ; configure active-high endstop for low end on X via pin xstop
+M574 X1 S1 P"xstop"                      ; configure active-high endstop for low end on X via pin xstop
 M574 Y1 S1 P"ystop"                      ; configure active-high endstop for low end on Y via pin ystop
 ;M574 Z1 S2                              ; configure Z-probe endstop for low end on Z
 
@@ -90,7 +91,7 @@ M558 T18000 F150                  ; Set Z probe Travel speed
 ; ####  Set axis minima:maxima switch positions
 ; Adjust to suit your machine and to make X=0 and Y=0 the edges of the bed
 ;M208 X0:250 Y0:250 Z-0.2:230      ; Conservative 300ZL/T settings (or 250ZL) ; These values are conservative to start with, adjust during commissioning.
-M208 X-32:305 Y0:300 Z0:610        ; 300ZLT
+M208 X-10:305 Y0:300.810 Z0:610 
 
 ; #### Tool definitions
 ; #####################
@@ -151,7 +152,7 @@ M558 F750                                   ; Z probe - raise probe height.
 ;G31 X2 Y42 Z2.65 P25 ; Customize your offsets appropriately - do a paper test, and put the probed value in the Z value here
 
 ; #### General probing configuration and offsets
-G31 Z0.70                                   ; Probe Z height - determine your own Z-Offset and enter it here (Note: Positive number is closer to the bed)
+G31 Z2.2                                    ; Probe Z height - determine your own Z-Offset and enter it here (Note: Positive number is closer to the bed)
 M558 H5 A5 T12000 S0.02                     ; M558 settings for all probes
 
 
@@ -184,8 +185,8 @@ M950 F7 C"duex.fan7"             ; Fan 7 on "Duex5 fan port 7"
 M950 F8 C"duex.fan8"             ; Fan 8 on "Duex5 fan port 8"
 
 M308 S10 Y"mcu-temp" A"mcu-temp" ; Set MCU on Sensor 10
-M106 P7 T35:55 H10 C"Elec.Cab.1" ; Electronics cooling fan that starts to turn on when the MCU temperature (virtual heater 100) reaches 45C
-M106 P8 T35:55 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperature reaches 55C or if any TMC2660 drivers
+M106 P7 T55:75 H10 C"Elec.Cab.1" ; Electronics cooling fan that starts to turn on when the MCU temperature (virtual heater 100) reaches 45C
+M106 P8 T55:75 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperature reaches 55C or if any TMC2660 drivers
                                  ; (N.B. If a fan is configured to trigger on a virtual heater whose sensor represents TMC2660 driver over-temperature
                                  ; flags, then when the fan turns on it will delay the reporting of an over-temperature warning for the corresponding drivers
                                  ; for a few seconds, to give the fan time to cool the driver down.)
@@ -245,7 +246,3 @@ M106 P5 S1                        ; Switch on green light.
 G91                               ; Send relative coordinates.
 G1 Z0.001 F99999 H2               ; Engage motors to prevent bed from moving after power on.
 G90                               ; Send absolute coordinates.
-
-M106 P5 S0                        ; Switch off green light.
-
-
