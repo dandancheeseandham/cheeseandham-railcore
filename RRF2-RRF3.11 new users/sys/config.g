@@ -32,8 +32,7 @@ M586 P2 S1                  ; Enable Telnet
 ; #### Axis and motor configuration
 M669 K1                     ; CoreXY mode
 M350 X16 Y16 Z16 E16 I1     ; Set 16x microstepping for axes & extruder, with interpolation.
-;M92 X200 Y200              ; Set 200 steps/mm for XY (0.9 deg/step . 16 tooth pulley and GT2 belt)
-M92 X100 Y100               ; Set 100 steps/mm for XY (1.8 deg/step . 16 tooth pulley and GT2 belt) CHEAPCORE SPECIFIC
+M92 X200 Y200              ; Set 200 steps/mm for XY (0.9 deg/step . 16 tooth pulley and GT2 belt)
 
 ; #### Drives
 M584 X0 Y1 Z5:6:7 E3:4:8:9  ; Map Z to drivers 5, 6, 7. Define unused drivers 3,4,8 and 9 as extruders
